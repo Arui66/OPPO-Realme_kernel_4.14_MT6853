@@ -178,7 +178,7 @@ jobs:
             --enable IPC_NS \
             --enable NET_NS \
             --enable MULTIUSER \
-            --disable USER_NS \
+            --enable USER_NS \
             --enable DEVTMPFS \
             --enable DEVTMPFS_MOUNT \
             --enable SECCOMP \
@@ -259,12 +259,22 @@ jobs:
         fi
 
         # 最终配置修正
-        ./scripts/config --file out/.config \
-                --enable CONFIG_NAMESPACES \
-                --enable CONFIG_DEVTMPFS \
-                --disable CONFIG_USER_NS \
-                --enable CONFIG_DEVTMPFS_MOUNT \
-                --enable CONFIG_SECTION_MISMATCH_WARN_ONLY
+        # DroidSpace 需要 USER_NS（docker unsafe procfs 修复），仅在启用时保留
+        if [ "${{ github.event.inputs.DroidSpace }}" = "true" ]; then
+          ./scripts/config --file out/.config \
+                  --enable CONFIG_NAMESPACES \
+                  --enable CONFIG_DEVTMPFS \
+                  --enable CONFIG_USER_NS \
+                  --enable CONFIG_DEVTMPFS_MOUNT \
+                  --enable CONFIG_SECTION_MISMATCH_WARN_ONLY
+        else
+          ./scripts/config --file out/.config \
+                  --enable CONFIG_NAMESPACES \
+                  --enable CONFIG_DEVTMPFS \
+                  --disable CONFIG_USER_NS \
+                  --enable CONFIG_DEVTMPFS_MOUNT \
+                  --enable CONFIG_SECTION_MISMATCH_WARN_ONLY
+        fi
 
         # KernelSU 和 SUSFS 配置
         # 如果启用了 SUSFS，无论哪个 SU 都必须启用 CONFIG_KSU_SUSFS
