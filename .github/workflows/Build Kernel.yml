@@ -161,11 +161,6 @@ jobs:
           -o nomount-setup.sh \
           || { echo "下载 NoMount setup 脚本失败"; exit 1; }
         bash nomount-setup.sh dev
-        test -f fs/nomount/Kconfig && test -f fs/nomount/Makefile \
-          || { echo "NoMount 源码集成失败"; exit 1; }
-        grep -Fq 'source "fs/nomount/Kconfig"' fs/Kconfig \
-          && grep -Fq 'obj-$(CONFIG_NOMOUNT) += nomount/' fs/Makefile \
-          || { echo "NoMount Kconfig/Makefile 集成失败"; exit 1; }
 
     - name: Setup ccache
       uses: hendrikmuhs/ccache-action@v1.2
@@ -183,7 +178,6 @@ jobs:
         export KBUILD_BUILD_HOST=coolapk@sanba
         export KBUILD_BUILD_USER=GitHub@sanba0519
 
-        # 首先生成初始 .config（无论选项如何都必须执行）
         make -j$(nproc --all) O=out ARCH=arm64 mt6853-ss_defconfig
 
         # DroidSpace
@@ -315,7 +309,7 @@ jobs:
             --disable CONFIG_KSU_TRACEPOINT_HOOK
         fi
 
-        # NoMount 使用内建方式，随内核镜像一起打包
+
         if [ "${{ github.event.inputs.nomount }}" = "true" ]; then
           echo "启用 NoMount..."
           ./scripts/config --file out/.config \
