@@ -56,6 +56,8 @@ Upstream:
      - [x] SUSFS-V2.2.0
      - [x] [DroidSpaces](https://github.com/ravindu644/Droidspaces-OSS)
      - [x] 墓碑 - [Cirno](https://cirno.shrairo.top/)
+     - [x] [NoMount](https://github.com/maxsteeel/nomount)
+     - [x] 修复几个CVE漏洞   --CVE-2026-43499 & CVE-2022-29581
      - [ ] [BBG](https://github.com/vc-teahouse/Baseband-guard)防格机
      - [ ] So on...
 - [x] 修补bpf
@@ -73,6 +75,7 @@ Upstream:
 
 [android_kernel_oplus_mt6853](https://github.com/momo54181/android_kernel_oplus_mt6853) 感谢momo佬的帮助
 
+[oppo_kernel_mt6885-mt6853-clean](https://github.com/Winkmoon/oppo_kernel_mt6885-mt6853-clean) 感谢xinran佬的帮助嘻嘻嘻嘻嘻
 ### 感谢Linux内核社区 正是因为你们开源社区才有了今天的繁荣
 
 <a href="https://github.com/sanba0519/OPPO-Realme_kernel_4.14_MT6853/graphs/contributors">
