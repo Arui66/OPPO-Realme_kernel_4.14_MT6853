@@ -11,7 +11,7 @@ on:
         default: RKSU
         options:
           - RKSU
-          - ReSukiSU
+          - BakaSU
 
       BBR:
         type: boolean
@@ -102,16 +102,16 @@ jobs:
           wget https://github.com/rksuorg/kernel_patches/raw/master/manual_hook/kernel-4.14.patch -O ksu-4.14.patch || { echo "下载 patch 失败"; exit 1; }
           patch -p1 < ksu-4.14.patch || { echo "patch 应用失败"; cat ksu-4.14.patch; exit 1; }
 
-        elif [ "${{ github.event.inputs.SU }}" = "ReSukiSU" ]; then
-          echo "KSU_LOG: 选择了 ReSukiSU"
+        elif [ "${{ github.event.inputs.SU }}" = "BakaSU" ]; then
+          echo "KSU_LOG: 选择了 BakaSU"
           if [ "${{ github.event.inputs.SUSFS }}" = "true" ]; then
-            echo "KSU_LOG: SUSFS 使用 ReSukiSU inline hooks，跳过 4.14 manual hook patch"
+            echo "KSU_LOG: SUSFS 使用 BakaSU inline hooks，跳过 4.14 manual hook patch"
           else
-            echo "KSU_LOG: 开始下载并应用 ReSukiSU 官方 4.14 manual hook patch"
-            wget -O resukisu-4.14.patch \
+            echo "KSU_LOG: 开始下载并应用 BakaSU 官方 4.14 manual hook patch"
+            wget -O BakaSU-4.14.patch \
                 https://raw.githubusercontent.com/ReSukiSU/ReSukiSU_Patches/main/scope-minimized/kernel-4.14.patch \
-              || { echo "下载 ReSukiSU 官方 patch 失败"; exit 1; }
-            patch -p1 < resukisu-4.14.patch || { echo "ReSukiSU 官方 patch 应用失败"; cat resukisu-4.14.patch; exit 1; }
+              || { echo "下载 BakaSU 官方 patch 失败"; exit 1; }
+            patch -p1 < BakaSU-4.14.patch || { echo "BakaSU 官方 patch 应用失败"; cat BakaSU-4.14.patch; exit 1; }
           fi
 
         else
@@ -135,11 +135,11 @@ jobs:
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel
         rm -rf KernelSU
-        if [ "${{ github.event.inputs.SU }}" = "ReSukiSU" ]; then
-          echo "KSU_LOG: Setup ReSukiSU"
-          curl -LSs "https://raw.githubusercontent.com/ReSukiSU/ReSukiSU/main/kernel/setup.sh" | bash -s main
+        if [ "${{ github.event.inputs.SU }}" = "BakaSU" ]; then
+          echo "KSU_LOG: Setup BakaSU"
+          curl -LSs "https://raw.githubusercontent.com/Baka-SU/BakaSU/main/kernel/setup.sh" | bash -s main
           if [ "${{ github.event.inputs.SUSFS }}" = "true" ]; then
-            echo "KSU_LOG: 应用 ReSukiSU SUSFS inline hooks"
+            echo "KSU_LOG: 应用 BakaSU SUSFS inline hooks"
             curl -LfsS \
               https://raw.githubusercontent.com/JackA1ltman/NonGKI_Kernel_Build_2nd/mainline/Patches/susfs_inline_hook_patches.sh \
               -o susfs_inline_hook_patches.sh \
@@ -300,8 +300,8 @@ jobs:
             --enable CONFIG_KSU_SUSFS \
             --disable CONFIG_KSU_MANUAL_HOOK \
             --disable CONFIG_KSU_TRACEPOINT_HOOK
-        elif [ "${{ github.event.inputs.SU }}" = "ReSukiSU" ]; then
-          echo "KSU_LOG: ReSukiSU 不启用 SUSFS，使用 manual hook"
+        elif [ "${{ github.event.inputs.SU }}" = "BakaSU" ]; then
+          echo "KSU_LOG: BakaSU 不启用 SUSFS，使用 manual hook"
           ./scripts/config --file out/.config \
             --enable CONFIG_KSU \
             --enable CONFIG_KSU_MANUAL_HOOK \
@@ -351,8 +351,8 @@ jobs:
     - name: Generate artifact name
       id: gen_name
       run: |
-        if [ "${{ github.event.inputs.SU }}" = "ReSukiSU" ]; then
-          NAME="MT6853-ReSukiSU"
+        if [ "${{ github.event.inputs.SU }}" = "BakaSU" ]; then
+          NAME="MT6853-BakaSU"
         else
           NAME="MT6853-RKSU"
         fi
@@ -412,7 +412,7 @@ jobs:
           if [ "${{ github.event.inputs.SU }}" = "RKSU" ]; then
             echo "Root方案:  RKSU"
           else
-            echo "Root方案:  ReSukiSU"
+            echo "Root方案:  BakaSU"
           fi
           if [ "${{ github.event.inputs.BBR }}" = "true" ]; then
             echo "✅ BBR"

@@ -19,7 +19,7 @@
 
 支持的Root管理器：
  - RKSU
- - ReSukiSU
+ - BakaSU
 ***
 
 ## 如何使用？
@@ -50,7 +50,7 @@ Upstream:
 
 此项目：
 - [x] 适配最新版[RKSU](https://github.com/rsuntk/KernelSU)
-- [x] 内置[Re:SukiSU](https://github.com/ReSukiSU/ReSukiSU)
+- [x] 内置[BakaSU](https://github.com/Baka-SU/BakaSU)
 - [x] 开放创意工坊
      - [x] BBR加速
      - [x] SUSFS-V2.2.0
@@ -65,9 +65,9 @@ Upstream:
 
 ***
 ## 鸣谢
-[RKSU](https://github.com/rsuntk/KernelSU) 一个专门为`no-GIK`内核的KSU分支
+[RKSU](https://github.com/rsuntk/KernelSU) 一个专门为`no-GIK`内核的KernelSU分支
 
-[ReSukiSU](https://github.com/ReSukiSU/ReSukiSU) SukiSU Ultra的分支
+[BakaSU](https://github.com/Baka-SU/BakaSU) KernelSU 的分支
 
 [NonGKI_Kernel_Build_2nd](https://github.com/JackA1ltman/NonGKI_Kernel_Build_2nd) 一个专注于No-GKI内核编译的项目
 
