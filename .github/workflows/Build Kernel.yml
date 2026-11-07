@@ -336,7 +336,7 @@ jobs:
         fi
 
         # 编译
-        make -j"$(nproc)" \
+        make -j8 \
                 O=out \
                 ARCH=arm64 \
                 CC="ccache clang" \
