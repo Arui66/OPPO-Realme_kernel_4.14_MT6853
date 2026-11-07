@@ -141,7 +141,10 @@ cc-disable-warning = $(call try-run,\
 
 # cc-name
 # Expands to either gcc or clang
-cc-name = $(shell $(CC) -v 2>&1 | grep -q "clang version" && echo clang || echo gcc)
+# Do not pipe $(CC) -v output into `grep -q`: grep exits on first match and
+# closes the pipe, making clang die with "LLVM ERROR: Broken pipe" (EPIPE is
+# a fatal error for LLVM tools). Capture the output first, then match.
+cc-name = $(shell out=`$(CC) -v 2>&1`; if echo "$$out" | grep -q "clang version"; then echo clang; else echo gcc; fi)
 
 # __cc-version
 # Returns compiler version
